@@ -1,7 +1,7 @@
 #include "utree.h"
 
-#define NR_LOAD         64000000
-#define NR_OPERATIONS   64000000
+#define NR_LOAD         10000 // 64000000
+#define NR_OPERATIONS   10000 // 64000000
 #define LOAD_YCSB      "insert1_zipfian_64M_load.dat"     
 #define RUN_YCSB       "insert1_zipfian_64M_run.dat"
 
