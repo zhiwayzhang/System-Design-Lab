@@ -1,3 +1,5 @@
+#include <bits/types/struct_timeval.h>
+#include <bits/types/time_t.h>
 #include <cassert>
 #include <climits>
 #include <fstream>
@@ -33,6 +35,8 @@ using namespace std;
 #define CAS(_p, _u, _v)                                             \
   (__atomic_compare_exchange_n(_p, _u, _v, false, __ATOMIC_ACQUIRE, \
                                __ATOMIC_ACQUIRE))
+
+double t1 = 0.0;
  
 class list_node_t {
 public:
@@ -907,8 +911,13 @@ retryinsert:
     return;
   }
 
+  // TODO
+  struct timeval start, end;
+  gettimeofday(&start, nullptr);
   cur = (list_node_t*)btree_search_pred_test(key, &hasFound, (char**)&prev, false, &testPage);
-
+  gettimeofday(&end, nullptr);
+  t1 += (end.tv_sec + (double)(end.tv_usec) / 1000000) - (start.tv_sec + (double)(start.tv_usec) / 1000000);
+  
   if(cur){
     cur->acquireVersionLock();
     cur->ptr = (uint64_t)right;
